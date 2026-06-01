@@ -1,6 +1,16 @@
-import { Card, Input, Button, Badge, Progress } from '@/components/ui';
-import { CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+  Card,
+  Input,
+  Button,
+  Badge,
+  Progress,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Tabs,
+  TabsList,
+  TabsTrigger,
+} from '@/components/ui';
 import {
   Search,
   Plus,
