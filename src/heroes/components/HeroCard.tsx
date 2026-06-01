@@ -1,4 +1,4 @@
-import { Heart, Eye, Zap, Brain, Gauge, Shield } from 'lucide-react';
+import { Heart, Eye, Zap, Brain, Gauge } from 'lucide-react';
 
 import {
   Badge,
@@ -127,31 +127,47 @@ export const HeroCard = ({
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1">
             <div className="flex items-center gap-1">
-              <Zap className="h-3 w-3 text-orange-500" />
+              <Zap className={`h-3 w-3 text-orange-500`} />
               <span className="text-xs font-medium">Fuerza</span>
             </div>
-            <Progress value={strValue} className="h-2" />
+            <Progress
+              value={strValue}
+              className="h-2"
+              activeColor={`bg-orange-500`}
+            />
           </div>
           <div className="space-y-1">
             <div className="flex items-center gap-1">
-              <Brain className="h-3 w-3 text-blue-500" />
+              <Brain className={`h-3 w-3 text-blue-500`} />
               <span className="text-xs font-medium">Inteligencia</span>
             </div>
-            <Progress value={intValue} className="h-2" />
+            <Progress
+              value={intValue}
+              className="h-2"
+              activeColor={`bg-blue-500`}
+            />
           </div>
           <div className="space-y-1">
             <div className="flex items-center gap-1">
-              <Gauge className="h-3 w-3 text-green-500" />
+              <Gauge className={`h-3 w-3 text-green-500`} />
               <span className="text-xs font-medium">Velocidad</span>
             </div>
-            <Progress value={spdValue} className="h-2" />
+            <Progress
+              value={spdValue}
+              className="h-2"
+              activeColor={`bg-green-500`}
+            />
           </div>
           <div className="space-y-1">
             <div className="flex items-center gap-1">
-              <Shield className="h-3 w-3 text-purple-500" />
+              <Gauge className={`h-3 w-3 text-purple-500`} />
               <span className="text-xs font-medium">Resistencia</span>
             </div>
-            <Progress value={stmValue} className="h-2" />
+            <Progress
+              value={stmValue}
+              className="h-2"
+              activeColor={`bg-purple-500`}
+            />
           </div>
         </div>
 
