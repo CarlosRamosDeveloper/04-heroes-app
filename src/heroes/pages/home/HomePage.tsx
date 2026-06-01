@@ -32,8 +32,8 @@ import {
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
-      <div className="max-w-7xl mx-auto p-6">
+    <>
+      <>
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
@@ -924,7 +924,7 @@ export default function HomePage() {
             <ChevronRight className="h-4 w-4" />
           </Button>
         </div>
-      </div>
-    </div>
+      </>
+    </>
   );
 }

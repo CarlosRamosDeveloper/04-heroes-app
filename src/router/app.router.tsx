@@ -1,5 +1,5 @@
 import { HeroesLayout } from '@/heroes/layouts/HeroesLayout';
-import { createBrowserRouter } from 'react-router';
+import { createBrowserRouter, Navigate } from 'react-router';
 import { AdminLayout, AdminPage, HeroPage, SearchPage } from './lazy.pages';
 import HomePage from '@/heroes/pages/home/HomePage';
 
@@ -31,5 +31,9 @@ export const router = createBrowserRouter([
         element: <AdminPage />,
       },
     ],
+  },
+  {
+    path: '*',
+    element: <Navigate to="/" />,
   },
 ]);
