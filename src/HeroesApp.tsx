@@ -1,10 +1,10 @@
-import { Button } from '@components/ui';
+import { RouterProvider } from 'react-router';
+import { router } from './router/app.router';
 
 export const HeroesApp = () => {
   return (
     <>
-      <h1>Heroes App!</h1>
-      <Button>Esto es un botón</Button>
+      <RouterProvider router={router} />
     </>
   );
 };
