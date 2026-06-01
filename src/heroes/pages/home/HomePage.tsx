@@ -1,3 +1,4 @@
+import { CustomJumbotron } from '@/components/custom';
 import {
   Card,
   Input,
@@ -35,14 +36,10 @@ export default function HomePage() {
     <>
       <>
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
-            Superhero Universe
-          </h1>
-          <p className="text-gray-600 text-lg">
-            Discover, explore, and manage your favorite superheroes and villains
-          </p>
-        </div>
+        <CustomJumbotron
+          title="Universo de Superhéroes"
+          description="Descubre, explora y administra superhéroes y villanos"
+        />
 
         {/* Stats Dashboard */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
@@ -101,7 +98,6 @@ export default function HomePage() {
             </CardContent>
           </Card>
         </div>
-
         {/* Controls */}
         <div className="flex flex-col lg:flex-row gap-4 mb-8">
           {/* Search */}
@@ -135,7 +131,6 @@ export default function HomePage() {
             </Button>
           </div>
         </div>
-
         {/* Advanced Filters */}
         <div className="bg-white rounded-lg p-6 mb-8 shadow-sm border">
           <div className="flex justify-between items-center mb-4">
@@ -183,7 +178,6 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-
         {/* Tabs */}
         <Tabs value="all" className="mb-8">
           <TabsList className="grid w-full grid-cols-4">
@@ -196,7 +190,6 @@ export default function HomePage() {
             <TabsTrigger value="villains">Villains (2)</TabsTrigger>
           </TabsList>
         </Tabs>
-
         {/* Results info */}
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center gap-4">
@@ -207,7 +200,6 @@ export default function HomePage() {
             </Badge>
           </div>
         </div>
-
         {/* Character Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
           {/* Hero Card 1 - Superman */}
@@ -898,7 +890,6 @@ export default function HomePage() {
             </CardContent>
           </Card>
         </div>
-
         {/* Pagination */}
         <div className="flex items-center justify-center space-x-2">
           <Button variant="outline" size="sm" disabled>
