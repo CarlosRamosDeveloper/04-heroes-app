@@ -1,24 +1,35 @@
-import { AdminPage } from '@/admin/pages/AdminPage';
-import { HeroPage } from '@/hero/pages/hero/HeroPage';
-import { HomePage } from '@/hero/pages/home/HomePage';
-import { SearchPage } from '@/hero/pages/search/SearchPage';
+import { HeroesLayout } from '@/heroes/layouts/HeroesLayout';
 import { createBrowserRouter } from 'react-router';
+import { AdminLayout, AdminPage, HeroPage, SearchPage } from './lazy.pages';
+import HomePage from '@/heroes/pages/home/HomePage';
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <HomePage />,
-  },
-  {
-    path: '/heroes/1',
-    element: <HeroPage />,
-  },
-  {
-    path: '/search',
-    element: <SearchPage />,
+    element: <HeroesLayout />,
+    children: [
+      {
+        index: true,
+        element: <HomePage />,
+      },
+      {
+        path: 'heroes/1',
+        element: <HeroPage />,
+      },
+      {
+        path: 'search',
+        element: <SearchPage />,
+      },
+    ],
   },
   {
     path: '/admin',
-    element: <AdminPage />,
+    element: <AdminLayout />,
+    children: [
+      {
+        index: true,
+        element: <AdminPage />,
+      },
+    ],
   },
 ]);
