@@ -60,15 +60,11 @@ export default function HomePage() {
           </TabsList>
 
           <TabsContent value="all">
-            <HeroGrid />
+            <HeroGrid heroes={heroesResponse?.heroes ?? []} />
           </TabsContent>
           <TabsContent value="favorites"></TabsContent>
-          <TabsContent value="heroes">
-            <HeroGrid />
-          </TabsContent>
-          <TabsContent value="villains">
-            <HeroGrid />
-          </TabsContent>
+          <TabsContent value="heroes"></TabsContent>
+          <TabsContent value="villains"></TabsContent>
         </Tabs>
 
         {/* Pagination */}

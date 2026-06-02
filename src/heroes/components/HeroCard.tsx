@@ -8,50 +8,24 @@ import {
   CardHeader,
   Progress,
 } from '@/components/ui';
+import type { Hero } from '../types';
 
 interface Props {
-  isActive: boolean;
-  owner: string;
-  isFavourite: boolean;
-  alias: string;
-  name: string;
-  role: string;
-  affiliation: string;
-  description: string;
-  strValue: number;
-  intValue: number;
-  spdValue: number;
-  stmValue: number;
-  powers: string[];
-  firstAppeared: number;
+  hero: Hero;
+  isFavourite?: boolean;
 }
 
-export const HeroCard = ({
-  isActive,
-  owner,
-  isFavourite,
-  alias,
-  name,
-  role,
-  affiliation,
-  description,
-  strValue,
-  intValue,
-  spdValue,
-  stmValue,
-  powers,
-  firstAppeared,
-}: Props) => {
+export const HeroCard = ({ hero, isFavourite = false }: Props) => {
   const ownerColor = (): string => {
-    if (owner === 'DC') return 'bg-blue-600';
-    if (owner === 'Marvel') return 'bg-red-600';
+    if (hero.universe === 'DC') return 'bg-blue-600';
+    if (hero.universe === 'Marvel') return 'bg-red-600';
     return 'bg-black-500';
   };
 
   const roleColor = (): string => {
-    if (role.toLowerCase() === 'héroe')
+    if (hero.category.toLowerCase() === 'hero')
       return 'bg-green-100 text-green-800 border-green-200';
-    if (role.toLowerCase() === 'anti-héroe')
+    if (hero.category.toLowerCase() === 'anti-hero')
       return 'bg-yellow-100 text-yellow-800 border-yellow-200';
     return 'bg-black-100 text-black-800 border-white-200';
   };
@@ -60,22 +34,21 @@ export const HeroCard = ({
     <Card className="group overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-linear-to-br from-white to-gray-50">
       <div className="relative h-64 overflow-hidden">
         <img
-          src="/placeholder.svg?height=300&width=300"
-          alt="Superman"
+          src={hero.image}
+          alt={hero.slug}
           className="object-cover transition-all duration-500 group-hover:scale-110"
         />
 
         {/* Status indicator */}
         <div className="absolute top-3 left-3 flex items-center gap-2">
-          {/* TODO: Cambiar la luz en función de si el personaje está activo o no*/}
           <div
-            className={`w-3 h-3 rounded-full ${isActive ? 'bg-green-500' : 'bg-red-500'}`}
+            className={`w-3 h-3 rounded-full ${hero.status ? 'bg-green-500' : 'bg-red-500'}`}
           />
           <Badge
             variant="secondary"
             className="text-xs bg-white/90 text-gray-700"
           >
-            {isActive ? 'Activo' : 'Retirado'}
+            {hero.status}
           </Badge>
         </div>
 
@@ -83,7 +56,7 @@ export const HeroCard = ({
         <Badge
           className={`absolute top-3 right-3 text-xs ${ownerColor()} text-white`}
         >
-          {owner}
+          {hero.universe}
         </Badge>
 
         {/* Favorite button */}
@@ -110,18 +83,18 @@ export const HeroCard = ({
       <CardHeader className="pb-3">
         <div className="flex justify-between items-start">
           <div className="space-y-1">
-            <h3 className="font-bold text-lg leading-tight">{alias}</h3>
-            <p className="text-sm text-gray-600">{name}</p>
+            <h3 className="font-bold text-lg leading-tight">{hero.alias}</h3>
+            <p className="text-sm text-gray-600">{hero.name}</p>
           </div>
-          <Badge className={`text-xs ${roleColor()}`}>{role}</Badge>
+          <Badge className={`text-xs ${roleColor()}`}>{hero.category}</Badge>
         </div>
         <Badge variant="outline" className="w-fit text-xs">
-          {affiliation}
+          {hero.team}
         </Badge>
       </CardHeader>
 
       <CardContent className="space-y-4">
-        <p className="text-sm text-gray-600 line-clamp-2">{description}</p>
+        <p className="text-sm text-gray-600 line-clamp-2">{hero.description}</p>
 
         {/* Stats */}
         <div className="grid grid-cols-2 gap-3">
@@ -131,7 +104,7 @@ export const HeroCard = ({
               <span className="text-xs font-medium">Fuerza</span>
             </div>
             <Progress
-              value={strValue}
+              value={hero.strength * 10}
               className="h-2"
               activeColor={`bg-orange-500`}
             />
@@ -142,7 +115,7 @@ export const HeroCard = ({
               <span className="text-xs font-medium">Inteligencia</span>
             </div>
             <Progress
-              value={intValue}
+              value={hero.intelligence * 10}
               className="h-2"
               activeColor={`bg-blue-500`}
             />
@@ -153,7 +126,7 @@ export const HeroCard = ({
               <span className="text-xs font-medium">Velocidad</span>
             </div>
             <Progress
-              value={spdValue}
+              value={hero.speed * 10}
               className="h-2"
               activeColor={`bg-green-500`}
             />
@@ -164,7 +137,7 @@ export const HeroCard = ({
               <span className="text-xs font-medium">Resistencia</span>
             </div>
             <Progress
-              value={stmValue}
+              value={hero.durability * 10}
               className="h-2"
               activeColor={`bg-purple-500`}
             />
@@ -175,19 +148,21 @@ export const HeroCard = ({
         <div className="space-y-2">
           <h4 className="font-medium text-sm">Powers:</h4>
           <div className="flex flex-wrap gap-1">
-            {powers.map((power, index) => (
-              <Badge
-                variant="outline"
-                className={`text-xs ${index === powers.length - 1 ? 'bg-gray-100' : ''} `}
-              >
+            {hero.powers.slice(0, 3).map((power) => (
+              <Badge variant="outline" className="text-xs">
                 {power}
               </Badge>
             ))}
+            {hero.powers.length > 3 && (
+              <Badge variant="outline" className="text-xs bg-gray-200">
+                +{hero.powers.length - 3} poderes
+              </Badge>
+            )}
           </div>
         </div>
 
         <div className="text-xs text-gray-500 pt-2 border-t">
-          First appeared: {firstAppeared}
+          Primera parición: {hero.firstAppearance}
         </div>
       </CardContent>
     </Card>
