@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useSearchParams } from 'react-router';
 
 import { useQuery } from '@tanstack/react-query';
 
@@ -11,10 +11,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui';
 import { getHeroesByPageAction } from '@/heroes/actions/get-heroes-by-page-action';
 import { HeroGrid, HeroStats } from '@/heroes/components';
 
-type TabContentType = 'all' | 'favorites' | 'heroes' | 'villains';
-
 export default function HomePage() {
-  const [activeTab, setActiveTab] = useState<TabContentType>('all');
+  const [searchParams, searchSetParams] = useSearchParams();
+  const activeTab = searchParams.get('tab') ?? 'all';
+
+  const selectedTab = () => {
+    const validTabs = ['all', 'favorites', 'heroes', 'villains'];
+    return validTabs.includes(activeTab) ? activeTab : 'all';
+  };
 
   const { data: heroesResponse } = useQuery({
     queryKey: ['heroes'],
@@ -36,24 +40,50 @@ export default function HomePage() {
         <HeroStats />
 
         {/* Tabs */}
-        <Tabs value={activeTab} className="mb-8">
+        <Tabs value={selectedTab()} className="mb-8">
           <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="all" onClick={() => setActiveTab('all')}>
+            <TabsTrigger
+              value="all"
+              onClick={() =>
+                searchSetParams((prev) => {
+                  prev.set('tab', 'all');
+                  return prev;
+                })
+              }
+            >
               All Characters (16)
             </TabsTrigger>
             <TabsTrigger
               value="favorites"
-              onClick={() => setActiveTab('favorites')}
+              onClick={() =>
+                searchSetParams((prev) => {
+                  prev.set('tab', 'favorites');
+                  return prev;
+                })
+              }
               className="flex items-center gap-2"
             >
               Favorites (3)
             </TabsTrigger>
-            <TabsTrigger value="heroes" onClick={() => setActiveTab('heroes')}>
+            <TabsTrigger
+              value="heroes"
+              onClick={() =>
+                searchSetParams((prev) => {
+                  prev.set('tab', 'heroes');
+                  return prev;
+                })
+              }
+            >
               Heroes (12)
             </TabsTrigger>
             <TabsTrigger
               value="villains"
-              onClick={() => setActiveTab('villains')}
+              onClick={() =>
+                searchSetParams((prev) => {
+                  prev.set('tab', 'villains');
+                  return prev;
+                })
+              }
             >
               Villains (2)
             </TabsTrigger>
