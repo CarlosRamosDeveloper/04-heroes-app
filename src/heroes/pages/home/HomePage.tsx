@@ -1,4 +1,8 @@
-import { CustomJumbotron, CustomPagination } from '@/components/custom';
+import {
+  CustomBreadcrumbs,
+  CustomJumbotron,
+  CustomPagination,
+} from '@/components/custom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui';
 import { HeroGrid, HeroStats } from '@/heroes/components';
 import { useState } from 'react';
@@ -11,6 +15,7 @@ export default function HomePage() {
   return (
     <>
       <>
+        <CustomBreadcrumbs />
         <CustomJumbotron
           title="Universo de Superhéroes"
           description="Descubre, explora y administra superhéroes y villanos"
