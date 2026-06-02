@@ -4,20 +4,21 @@ import {
   CustomPagination,
 } from '@/components/custom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui';
-import { getHeroesByPage } from '@/heroes/actions/get-heroes-by-page-action';
+import { getHeroesByPageAction } from '@/heroes/actions/get-heroes-by-page-action';
 import { HeroGrid, HeroStats } from '@/heroes/components';
-import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 
 type TabContentType = 'all' | 'favorites' | 'heroes' | 'villains';
 
 export default function HomePage() {
   const [activeTab, setActiveTab] = useState<TabContentType>('all');
 
-  useEffect(() => {
-    getHeroesByPage().then((heroes) => {
-      console.log(heroes);
-    });
-  }, []);
+  const { data } = useQuery({
+    queryKey: ['heroes'],
+    queryFn: () => getHeroesByPageAction(),
+    staleTime: 1000 * 60 * 5,
+  });
 
   return (
     <>
