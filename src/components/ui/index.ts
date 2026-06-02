@@ -1,13 +1,4 @@
 export { Badge, badgeVariants } from './badge';
-export { Input } from './input';
-export { Progress } from './progress';
-export {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-  tabsListVariants,
-} from './tabs';
 export { Button, buttonVariants } from './button';
 export {
   Card,
@@ -18,3 +9,23 @@ export {
   CardHeader,
   CardTitle,
 } from './card';
+export { Input } from './input';
+export {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuIndicator,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuViewport,
+  navigationMenuTriggerStyle,
+} from './navigation-menu';
+export { Progress } from './progress';
+export {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+  tabsListVariants,
+} from './tabs';
