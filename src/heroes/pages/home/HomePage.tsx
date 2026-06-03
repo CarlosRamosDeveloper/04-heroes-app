@@ -14,6 +14,8 @@ import { HeroGrid, HeroStats } from '@/heroes/components';
 export default function HomePage() {
   const [searchParams, searchSetParams] = useSearchParams();
   const activeTab = searchParams.get('tab') ?? 'all';
+  const page = searchParams.get('page') ?? '1';
+  const limit = searchParams.get('limit') ?? '6';
 
   const selectedTab = () => {
     const validTabs = ['all', 'favorites', 'heroes', 'villains'];
@@ -22,7 +24,7 @@ export default function HomePage() {
 
   const { data: heroesResponse } = useQuery({
     queryKey: ['heroes'],
-    queryFn: () => getHeroesByPageAction(),
+    queryFn: () => getHeroesByPageAction(+page, +limit),
     staleTime: 1000 * 60 * 5,
   });
 
