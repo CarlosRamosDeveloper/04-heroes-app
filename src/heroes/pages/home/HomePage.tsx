@@ -14,7 +14,8 @@ export default function HomePage() {
   const activeTab = searchParams.get('tab') ?? 'all';
   const page = searchParams.get('page') ?? '1';
   const limit = searchParams.get('limit') ?? '6';
-  const { data: heroesResponse } = usePaginatedHero(+page, +limit);
+  const category = searchParams.get('category') ?? 'all';
+  const { data: heroesResponse } = usePaginatedHero(+page, +limit, category);
   const { data: summaryData } = useHeroSummary();
 
   const selectedTab = () => {
@@ -41,6 +42,8 @@ export default function HomePage() {
               onClick={() =>
                 searchSetParams((prev) => {
                   prev.set('tab', 'all');
+                  prev.set('page', '1');
+                  prev.set('category', 'all');
                   return prev;
                 })
               }
@@ -64,6 +67,8 @@ export default function HomePage() {
               onClick={() =>
                 searchSetParams((prev) => {
                   prev.set('tab', 'heroes');
+                  prev.set('page', '1');
+                  prev.set('category', 'hero');
                   return prev;
                 })
               }
@@ -75,6 +80,8 @@ export default function HomePage() {
               onClick={() =>
                 searchSetParams((prev) => {
                   prev.set('tab', 'villains');
+                  prev.set('page', '1');
+                  prev.set('category', 'villain');
                   return prev;
                 })
               }
@@ -87,8 +94,12 @@ export default function HomePage() {
             <HeroGrid heroes={heroesResponse?.heroes ?? []} />
           </TabsContent>
           <TabsContent value="favorites"></TabsContent>
-          <TabsContent value="heroes"></TabsContent>
-          <TabsContent value="villains"></TabsContent>
+          <TabsContent value="heroes">
+            <HeroGrid heroes={heroesResponse?.heroes ?? []} />
+          </TabsContent>
+          <TabsContent value="villains">
+            <HeroGrid heroes={heroesResponse?.heroes ?? []} />
+          </TabsContent>
         </Tabs>
 
         {/* Pagination */}
