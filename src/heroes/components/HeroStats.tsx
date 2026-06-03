@@ -4,7 +4,7 @@ import { Heart, Trophy, Users, Zap } from 'lucide-react';
 
 import { Badge } from '@/components/ui';
 import { HeroStatCard } from './HeroStatCard';
-import { getSummaryAction } from '../actions/get-summary.action';
+import { getSummaryAction } from '../actions';
 
 export const HeroStats = () => {
   const { data: summaryData } = useQuery({

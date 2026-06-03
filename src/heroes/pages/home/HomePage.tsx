@@ -8,8 +8,8 @@ import {
   CustomPagination,
 } from '@/components/custom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui';
-import { getHeroesByPageAction } from '@/heroes/actions/get-heroes-by-page-action';
 import { HeroGrid, HeroStats } from '@/heroes/components';
+import { getHeroesByPageAction, getSummaryAction } from '@/heroes/actions';
 
 export default function HomePage() {
   const [searchParams, searchSetParams] = useSearchParams();
@@ -25,6 +25,12 @@ export default function HomePage() {
   const { data: heroesResponse } = useQuery({
     queryKey: ['heroes', { page, limit }],
     queryFn: () => getHeroesByPageAction(+page, +limit),
+    staleTime: 1000 * 60 * 5,
+  });
+
+  const { data: summaryData } = useQuery({
+    queryKey: ['summary-data'],
+    queryFn: getSummaryAction,
     staleTime: 1000 * 60 * 5,
   });
 
@@ -53,7 +59,7 @@ export default function HomePage() {
                 })
               }
             >
-              All Characters (16)
+              All Characters ({summaryData?.totalHeroes})
             </TabsTrigger>
             <TabsTrigger
               value="favorites"
@@ -76,7 +82,7 @@ export default function HomePage() {
                 })
               }
             >
-              Heroes (12)
+              Heroes ({summaryData?.totalHeroes})
             </TabsTrigger>
             <TabsTrigger
               value="villains"
@@ -87,7 +93,7 @@ export default function HomePage() {
                 })
               }
             >
-              Villains (2)
+              Villains ({summaryData?.villainCount})
             </TabsTrigger>
           </TabsList>
 
