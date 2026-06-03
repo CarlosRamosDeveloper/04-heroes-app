@@ -7,3 +7,6 @@ export const SearchPage = lazy(
 
 export const AdminLayout = lazy(() => import('@/admin/layouts/AdminLayout'));
 export const AdminPage = lazy(() => import('@/admin/pages/AdminPage'));
+export const NonFoundHero = lazy(
+  () => import('@/heroes/pages/error/NonFoundHero'),
+);

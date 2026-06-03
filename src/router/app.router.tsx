@@ -1,6 +1,12 @@
 import { HeroesLayout } from '@/heroes/layouts/HeroesLayout';
 import { createBrowserRouter, Navigate } from 'react-router';
-import { AdminLayout, AdminPage, HeroPage, SearchPage } from './lazy.pages';
+import {
+  AdminLayout,
+  AdminPage,
+  HeroPage,
+  NonFoundHero,
+  SearchPage,
+} from './lazy.pages';
 import HomePage from '@/heroes/pages/home/HomePage';
 
 export const router = createBrowserRouter([
@@ -19,6 +25,10 @@ export const router = createBrowserRouter([
       {
         path: 'search',
         element: <SearchPage />,
+      },
+      {
+        path: 'non-found-hero',
+        element: <NonFoundHero />,
       },
     ],
   },
