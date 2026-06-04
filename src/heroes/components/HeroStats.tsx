@@ -1,11 +1,21 @@
+import { use } from 'react';
 import { Heart, Trophy, Users, Zap } from 'lucide-react';
 
 import { Badge } from '@/components/ui';
 import { HeroStatCard } from './HeroStatCard';
 import { useHeroSummary } from '../hooks';
+import { FavoriteHeroContext } from '../context/FavoriteHeroContext';
 
 export const HeroStats = () => {
   const { data: summaryData } = useHeroSummary();
+  const { favoriteCount } = use(FavoriteHeroContext);
+
+  if (!summaryData) return <h1>Loading...</h1>;
+
+  const getFavoritesPercentage = (
+    (favoriteCount / summaryData!.totalHeroes) *
+    100
+  ).toFixed(2);
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
@@ -13,13 +23,13 @@ export const HeroStats = () => {
         title="Total de personajes"
         icon={<Users className="h-4 w-4 text-muted-foreground" />}
       >
-        <div className="text-2xl font-bold">{summaryData?.totalHeroes}</div>
+        <div className="text-2xl font-bold">{summaryData.totalHeroes}</div>
         <div className="flex gap-1 mt-2">
           <Badge variant="secondary" className="text-xs">
-            {summaryData?.heroCount} Heroes
+            {summaryData.heroCount} Heroes
           </Badge>
           <Badge variant="destructive" className="text-xs">
-            {summaryData?.villainCount} Villanos
+            {summaryData.villainCount} Villanos
           </Badge>
         </div>
       </HeroStatCard>
@@ -29,8 +39,10 @@ export const HeroStats = () => {
         icon={<Heart className="h-4 w-4 text-muted-foreground" />}
       >
         {/* TODO: Calcular el total de favoritos */}
-        <div className="text-2xl font-bold text-red-600">3</div>
-        <p className="text-xs text-muted-foreground">18.8% del total</p>
+        <div className="text-2xl font-bold text-red-600">{favoriteCount}</div>
+        <p className="text-xs text-muted-foreground">
+          {getFavoritesPercentage}% del total
+        </p>
       </HeroStatCard>
 
       <HeroStatCard
@@ -38,10 +50,10 @@ export const HeroStats = () => {
         icon={<Zap className="h-4 w-4 text-muted-foreground" />}
       >
         <div className="text-lg font-bold">
-          {summaryData?.strongestHero.alias}
+          {summaryData.strongestHero.alias}
         </div>
         <p className="text-xs text-muted-foreground">
-          Fuerza: {summaryData?.strongestHero.strength}/10
+          Fuerza: {summaryData.strongestHero.strength}/10
         </p>
       </HeroStatCard>
 
@@ -50,10 +62,10 @@ export const HeroStats = () => {
         icon={<Trophy className="h-4 w-4 text-muted-foreground" />}
       >
         <div className="text-lg font-bold">
-          {summaryData?.smartestHero.alias}
+          {summaryData.smartestHero.alias}
         </div>
         <p className="text-xs text-muted-foreground">
-          Inteligencia: {summaryData?.smartestHero.intelligence}/10
+          Inteligencia: {summaryData.smartestHero.intelligence}/10
         </p>
       </HeroStatCard>
     </div>

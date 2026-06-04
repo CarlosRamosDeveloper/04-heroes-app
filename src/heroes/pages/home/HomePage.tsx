@@ -1,3 +1,4 @@
+import { use } from 'react';
 import { useSearchParams } from 'react-router';
 
 import {
@@ -8,9 +9,11 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui';
 import { HeroGrid, HeroStats } from '@/heroes/components';
 import { useHeroSummary, usePaginatedHero } from '@/heroes/hooks';
+import { FavoriteHeroContext } from '@/heroes/context/FavoriteHeroContext';
 
 export default function HomePage() {
   const [searchParams, searchSetParams] = useSearchParams();
+  const { favorites, favoriteCount } = use(FavoriteHeroContext);
   const activeTab = searchParams.get('tab') ?? 'all';
   const page = searchParams.get('page') ?? '1';
   const limit = searchParams.get('limit') ?? '6';
@@ -60,7 +63,7 @@ export default function HomePage() {
               }
               className="flex items-center gap-2"
             >
-              Favorites (3)
+              Favorites ({favoriteCount})
             </TabsTrigger>
             <TabsTrigger
               value="heroes"
@@ -93,7 +96,9 @@ export default function HomePage() {
           <TabsContent value="all">
             <HeroGrid heroes={heroesResponse?.heroes ?? []} />
           </TabsContent>
-          <TabsContent value="favorites"></TabsContent>
+          <TabsContent value="favorites">
+            <HeroGrid heroes={favorites} />
+          </TabsContent>
           <TabsContent value="heroes">
             <HeroGrid heroes={heroesResponse?.heroes ?? []} />
           </TabsContent>
