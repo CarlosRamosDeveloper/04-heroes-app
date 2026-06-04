@@ -73,7 +73,7 @@ export default function HomePage() {
                 })
               }
             >
-              Heroes ({summaryData?.totalHeroes})
+              Heroes ({summaryData?.heroCount})
             </TabsTrigger>
             <TabsTrigger
               value="villains"
