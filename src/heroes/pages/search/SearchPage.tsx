@@ -1,8 +1,20 @@
 import { CustomBreadcrumbs, CustomJumbotron } from '@/components/custom';
-import { HeroStats } from '@/heroes/components';
+import { HeroGrid, HeroStats } from '@/heroes/components';
 import { SearchControls } from './components/SearchControls';
+import { searchHeroesAction } from '@/heroes/actions';
+import { useSearchParams } from 'react-router';
+import { useQuery } from '@tanstack/react-query';
 
 export const SearchPage = () => {
+  const [searchParams] = useSearchParams();
+  const name = searchParams.get('name') ?? '';
+
+  const { data: filteredHeroes = [] } = useQuery({
+    queryKey: ['search', { name }],
+    queryFn: () => searchHeroesAction({ name }),
+    staleTime: 1000 * 60 * 5,
+  });
+
   return (
     <>
       <CustomBreadcrumbs
@@ -18,6 +30,8 @@ export const SearchPage = () => {
       <CustomJumbotron title="Búsqueda de superhéroes y villanos" />
       <HeroStats />
       <SearchControls />
+
+      <HeroGrid heroes={filteredHeroes} />
     </>
   );
 };
