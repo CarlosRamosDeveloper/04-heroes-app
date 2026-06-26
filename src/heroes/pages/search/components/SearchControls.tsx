@@ -12,9 +12,16 @@ import {
 
 import { useSearchParams } from 'react-router';
 
+const accordionKey = 'active-accordion';
+const strKey = 'strength';
+const filterKey = 'advanced-filters';
+
 export const SearchControls = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const isAccordionActive = searchParams.get(accordionKey) ?? '';
+  const strenghtSearchValue = Number(searchParams.get(strKey) ?? '0');
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
@@ -22,13 +29,33 @@ export const SearchControls = () => {
 
       if (value === '' || value === undefined) return;
 
-      setSearchParams((prev) => {
-        prev.set('name', value);
-
-        return prev;
-      });
+      setQueryParams('name', value);
       console.log({ value });
     }
+  };
+
+  const setQueryParams = (name: string, value: string) => {
+    setSearchParams((prev) => {
+      prev.set(name, value);
+
+      return prev;
+    });
+  };
+
+  const handleAccordion = () => {
+    if (isAccordionActive === filterKey) {
+      setSearchParams((prev) => {
+        prev.delete(accordionKey);
+        return prev;
+      });
+      return;
+    }
+
+    setQueryParams(accordionKey, filterKey);
+  };
+
+  const handleSearchByStrenght = (value: number[]) => {
+    setQueryParams(strKey, value[0].toString());
   };
 
   return (
@@ -48,17 +75,21 @@ export const SearchControls = () => {
 
         {/* Action buttons */}
         <div className="flex gap-2">
-          <Button variant="outline" className="h-12 bg-transparent">
+          <Button
+            variant={isAccordionActive === filterKey ? 'default' : 'outline'}
+            className="h-12"
+            onClick={handleAccordion}
+          >
             <Filter className="h-4 w-4 mr-2" />
             Filters
           </Button>
 
-          <Button variant="outline" className="h-12 bg-transparent">
+          <Button variant="outline" className="h-12">
             <SortAsc className="h-4 w-4 mr-2" />
             Sort by Name
           </Button>
 
-          <Button variant="outline" className="h-12 bg-transparent">
+          <Button variant="outline" className="h-12">
             <Grid className="h-4 w-4" />
           </Button>
 
@@ -69,8 +100,8 @@ export const SearchControls = () => {
         </div>
       </div>
 
-      <Accordion type="single" collapsible value="item-1">
-        <AccordionItem value="item-1">
+      <Accordion type="single" collapsible value={isAccordionActive}>
+        <AccordionItem value={filterKey}>
           <AccordionContent>
             <div className="bg-white rounded-lg p-6 mb-8 shadow-sm border">
               <div className="flex justify-between items-center mb-4">
@@ -105,9 +136,14 @@ export const SearchControls = () => {
               </div>
               <div className="mt-4">
                 <label className="text-sm font-medium">
-                  Minimum Strength: 0/10
+                  Minimum Strength: {strenghtSearchValue}/10
                 </label>
-                <Slider defaultValue={[5]} max={10} step={1} />
+                <Slider
+                  defaultValue={[strenghtSearchValue]}
+                  onValueChange={handleSearchByStrenght}
+                  max={10}
+                  step={1}
+                />
               </div>
             </div>
           </AccordionContent>
