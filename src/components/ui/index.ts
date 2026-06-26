@@ -1,3 +1,9 @@
+export {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from './accordion';
 export { Badge, badgeVariants } from './badge';
 export {
   Breadcrumb,
@@ -31,6 +37,7 @@ export {
   navigationMenuTriggerStyle,
 } from './navigation-menu';
 export { Progress } from './progress';
+export { Slider } from './slider';
 export {
   Tabs,
   TabsContent,
